@@ -8,9 +8,9 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
-		config.setTitle("SnakeGame");
+		config.setTitle("Game");
 		config.setWindowIcon("icon.png");
 		config.setWindowedMode(640,640);
-		new Lwjgl3Application(new SnakeGame(), config);
+		new Lwjgl3Application(new Game(), config);
 	}
 }
