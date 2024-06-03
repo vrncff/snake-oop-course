@@ -12,7 +12,7 @@ public class Snake {
         body = new LinkedList<>();
         direction = Direction.RIGHT;
         grow = false;
-        speed = 0.1f; // Velocidade inicial
+        speed = 0.18f; // Velocidade inicial
         // Adicionar segmentos iniciais
         body.add(new Cell(5, 5));
         body.add(new Cell(4, 5));
@@ -37,7 +37,7 @@ public class Snake {
     }
 
     public void increaseSpeed() {
-        speed *= 0.95f; // Aumenta a velocidade (reduz o intervalo de atualização)
+        speed *= 0.97f; // Aumenta a velocidade (reduz o intervalo de atualização)
     }
 
     public float getSpeed() {

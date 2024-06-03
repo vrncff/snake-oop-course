@@ -8,7 +8,7 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);						// Frame rate
 		config.setTitle("Snake Game");						// Título da janela do jogo
-		//config.setWindowIcon("icon.png");					// ícone da janela do jogo
+		config.setWindowIcon("icon.png");					// ícone da janela do jogo
 		config.setWindowedMode(1200,800);					// Dimensões da janela
 		config.setResizable(false);							// Impede que a janela seja redimensionada
 

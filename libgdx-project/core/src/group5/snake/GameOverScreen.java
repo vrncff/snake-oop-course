@@ -4,20 +4,19 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.Input.Keys;
 
 public class GameOverScreen implements Screen {
     final SnakeGame game;
     OrthographicCamera camera;
-    BitmapFont font;
+    Texture backgroundTexture;
 
     public GameOverScreen(final SnakeGame game) {
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
-        font = new BitmapFont();
+        backgroundTexture = game.assets.getTexture("gameOverScreen.png");
     }
 
     @Override
@@ -34,8 +33,7 @@ public class GameOverScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-        font.draw(game.batch, "Game Over!", 350, 240);
-        font.draw(game.batch, "Press Enter to Restart", 320, 200);
+        game.batch.draw(backgroundTexture,0,0,800,480);
         game.batch.end();
 
         if (Gdx.input.isKeyPressed(Keys.ENTER)) {
@@ -66,6 +64,5 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void dispose() {
-        font.dispose();
     }
 }
