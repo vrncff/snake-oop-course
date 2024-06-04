@@ -1,4 +1,4 @@
-package group5.snake;
+package group5.snake.screens;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
@@ -6,11 +6,20 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import group5.snake.*;
+import group5.snake.controll.Cell;
+import group5.snake.controll.Direction;
+import group5.snake.entity.Food;
+import group5.snake.entity.Snake;
+
 import java.util.Random;
 
+/**
+ * This class represents the main game screen for the Snake game.
+ * It handles the rendering of game objects, and user input.
+ */
 public class GameScreen implements Screen {
     final SnakeGame game;
     OrthographicCamera camera;
@@ -25,57 +34,77 @@ public class GameScreen implements Screen {
     Music soundtrack;
     Sound pickUpSound, hitSound;
 
+
+    /**
+     * Constructor for the GameScreen class.
+     * Initializes the game, camera, textures, sounds, game objects, score, and background music.
+     * @param game the current game instance
+     */
     public GameScreen(final SnakeGame game) {
         this.game = game;
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
+        camera.setToOrtho(false, 800, 480);     // Define a resolução da tela
+
+        // Carrega as texturas
         backgroundTexture = game.assets.getTexture("gameScreen.png");
         snakeTexture = game.assets.getTexture("snake.png");
         foodTexture = game.assets.getTexture("food.png");
-        snake = new Snake();
-        random = new Random();
-        spawnFood();
-        score = 0;
-        font = new BitmapFont();
-        started = false; // Inicialmente, o jogo não começou
 
+        // Carrega os sons
         soundtrack = game.assets.getMusic("soundtrack.mp3");
         pickUpSound = game.assets.getSound("pickup.wav");
         hitSound = game.assets.getSound("hit.wav");
 
-        soundtrack.setLooping(true);        // Inicia a musica de fundo
+        // Cria os objetos do jogo
+        snake = new Snake();
+        random = new Random();
+        font = new BitmapFont();
+
+        score = 0;                          // Inicializa o score = 0
+        started = false;                    // Inicialmente, o jogo não começa
+        spawnFood();                        // Cria a comida no jogo
+
+        // Configura e inicia a música de fundo
+        soundtrack.setLooping(true);
         soundtrack.play();
 
     }
 
+    /**
+     * Spawns food at a random location within the game area.
+     */
     private void spawnFood() {
-        int x = random.nextInt(40);
-        int y = random.nextInt(22);     // -2 desconsiderando a faixa de score points
+        int x = random.nextInt(40);     // 800/20 = 40 células por grade
+        int y = random.nextInt(22);     // 480/20 = 24 (-2 desconsiderando a faixa de score)
         food = new Food(foodTexture, x, y);
     }
 
-    @Override
-    public void show() {
-        // Chamado quando esta tela se torna a tela atual do jogo.
-    }
-
+    /**
+     * Renders the game objects and handles game logic.
+     * @param delta time since last frame
+     */
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        camera.update();
-        game.batch.setProjectionMatrix(camera.combined);
+        camera.update();                                            // Atualiza a câmera
+        game.batch.setProjectionMatrix(camera.combined);            // Define a matriz de projeção para a câmera
 
-        game.batch.begin();
+        game.batch.begin();     // Inicia a renderização
+
+        // Desenha o fundo
         game.batch.draw(backgroundTexture, 0, 0, 800, 480);
-        for (Cell cell : snake.getBody()) {
+
+        // Desenha a cobra
+        for (Cell cell : snake.getBody())
             game.batch.draw(snakeTexture, cell.x * 20, cell.y * 20, 20, 20);
-        }
+
+        // Desenha a comida
         game.batch.draw(food.getTexture(), food.getPosition().x * 20, food.getPosition().y * 20, 20, 20);
+
+        // Desenha o score board
         font.draw(game.batch, "Score: " + score, 10, 470);
 
-        game.batch.end();
+        game.batch.end();       // Finaliza a renderização
 
         if (!started) {
             // Verificar se uma tecla de direção foi pressionada
@@ -84,7 +113,7 @@ public class GameScreen implements Screen {
                 started = true;
             }
         } else {
-            // Atualização do jogo
+            // Atualiza o estado do jogo
             timer += delta;
             if (timer >= snake.getSpeed()) {
                 snake.update();
@@ -100,6 +129,10 @@ public class GameScreen implements Screen {
         }
     }
 
+    /**
+     * Checks for collisions between the snake and the screen borders, the snake itself, and the food.
+     * Handles game over condition and plays appropriate sound effects.
+     */
     private void checkCollisions() {
         Cell head = snake.getBody().getFirst();
 
@@ -122,39 +155,54 @@ public class GameScreen implements Screen {
         // Checar colisão com a comida
         if (head.x == food.getPosition().x && head.y == food.getPosition().y) {
             snake.grow();
-            snake.increaseSpeed(); // Aumentar a velocidade ao comer comida
+            snake.increaseSpeed();      // Aumentar a velocidade ao comer comida
             spawnFood();
-            score += 1; // Incrementar a pontuação
-            pickUpSound.play();     // Efeito sonoro de pegar a comida
+            score += 1;                 // Incrementar a pontuação
+            pickUpSound.play();         // Efeito sonoro de pegar a comida
         }
     }
 
+    /**
+     * Called when this screen becomes the current screen of the game.
+     */
     @Override
-    public void resize(int width, int height) {
-        // Chamado quando a tela é redimensionada.
-    }
+    public void show() { }
 
+    /**
+     * Called when the screen is resized.
+     * @param width  the new width of the screen
+     * @param height the new height of the screen
+     */
     @Override
-    public void pause() {
-        // Chamado quando o jogo é pausado.
-    }
+    public void resize(int width, int height) { }
 
+    /**
+     * Called when the game is paused.
+     */
     @Override
-    public void resume() {
-        // Chamado quando o jogo é retomado após a pausa.
-    }
+    public void pause() { }
 
+    /**
+     * Called when the game is resumed after being paused.
+     */
     @Override
-    public void hide() {
-        // Chamado quando outra tela substitui esta.
-    }
+    public void resume() { }
 
+    /**
+     * Called when another screen replaces this one.
+     */
+    @Override
+    public void hide() { }
+
+    /**
+     * Releases the resources
+     */
     @Override
     public void dispose() {
         // Dispose do BitmapFont
         font.dispose();
 
-        // Parar a música de fundo se ainda estiver tocando
+        // Para a música de fundo se ainda estiver tocando
         if (soundtrack.isPlaying()) {
             soundtrack.stop();
         }
