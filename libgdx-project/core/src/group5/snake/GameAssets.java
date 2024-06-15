@@ -23,15 +23,25 @@ public class GameAssets {
      * Loads all the textures and sounds into the asset manager.
      */
     public void load() {
-        // Carregar todas as texturas e outros recursos aqui
+        // Assets para o home screen
+        assetManager.load("bgHomeScreen.png", Texture.class);
+        assetManager.load("title.png", Texture.class);
+        assetManager.load("snakeIcon.png", Texture.class);
+        assetManager.load("singlePlayerText.png", Texture.class);
+        assetManager.load("multiPlayerText.png", Texture.class);
+        assetManager.load("quitText.png", Texture.class);
+        assetManager.load("pressEnterText.png", Texture.class);
+
+        // Assets para o game screen
         assetManager.load("snake.png", Texture.class);
         assetManager.load("food.png", Texture.class);
         assetManager.load("gameScreen.png", Texture.class);
-        assetManager.load("gameOverScreen.png", Texture.class);
         assetManager.load("soundtrack.mp3", Music.class);
         assetManager.load("pickup.wav", Sound.class);
         assetManager.load("hit.wav", Sound.class);
 
+        // Assets para o game over screen
+        assetManager.load("gameOverScreen.png", Texture.class);
     }
 
     /**

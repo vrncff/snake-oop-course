@@ -13,14 +13,13 @@ import group5.snake.controll.Cell;
 import group5.snake.controll.Direction;
 import group5.snake.entity.Food;
 import group5.snake.entity.Snake;
-
 import java.util.Random;
 
 /**
  * This class represents the main game screen for the Snake game.
  * It handles the rendering of game objects, and user input.
  */
-public class GameScreen implements Screen {
+public class SinglePlayerGameScreen implements Screen {
     final SnakeGame game;
     OrthographicCamera camera;
     Texture snakeTexture, foodTexture, backgroundTexture;
@@ -34,13 +33,12 @@ public class GameScreen implements Screen {
     Music soundtrack;
     Sound pickUpSound, hitSound;
 
-
     /**
-     * Constructor for the GameScreen class.
+     * Constructor for the SinglePlayerGameScreen class.
      * Initializes the game, camera, textures, sounds, game objects, score, and background music.
      * @param game the current game instance
      */
-    public GameScreen(final SnakeGame game) {
+    public SinglePlayerGameScreen(final SnakeGame game) {
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);     // Define a resolução da tela
@@ -56,7 +54,7 @@ public class GameScreen implements Screen {
         hitSound = game.assets.getSound("hit.wav");
 
         // Cria os objetos do jogo
-        snake = new Snake();
+        snake = new Snake(5,5);
         random = new Random();
         font = new BitmapFont();
 
@@ -208,5 +206,3 @@ public class GameScreen implements Screen {
         }
     }
 }
-
-

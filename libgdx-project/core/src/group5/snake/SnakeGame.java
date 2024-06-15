@@ -2,7 +2,8 @@ package group5.snake;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import group5.snake.screens.GameScreen;
+import group5.snake.screens.HomeScreen;
+import group5.snake.screens.MultiPlayerGameScreen;
 
 /**
  * The SnakeGame class extends the Game class from the libGDX library.
@@ -22,7 +23,7 @@ public class SnakeGame extends Game {
 		assets = new GameAssets();
 		assets.load();
 		assets.finishLoading();
-		this.setScreen(new GameScreen(this));
+		this.setScreen(new MultiPlayerGameScreen(this));
 	}
 
 	/**

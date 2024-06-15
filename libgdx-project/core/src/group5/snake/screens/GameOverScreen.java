@@ -16,7 +16,6 @@ public class GameOverScreen implements Screen {
     OrthographicCamera camera;
     Texture backgroundTexture;
 
-
     /**
      * Constructor for the GameOverScreen class.
      * Initializes the game, camera, and background texture.
@@ -39,15 +38,15 @@ public class GameOverScreen implements Screen {
     public void render(float delta) {
 
         camera.update();                                        // Atualiza a câmera
-        game.batch.setProjectionMatrix(camera.combined);        // Define a matriz de projeção para a câmera
+        game.batch.setProjectionMatrix(camera.combined);        // Define a matriz de projeção da câmera
 
-        game.batch.begin();             // Inicia a renderização
+        game.batch.begin();                                                     // Inicia a renderização
         game.batch.draw(backgroundTexture,0,0,800,480);     // Desenha o fundo
-        game.batch.end();               // Termina a renderização
+        game.batch.end();                                                       // Termina a renderização
 
-
+        // Verifica se a tecla foi pressionada
         if (Gdx.input.isKeyPressed(Keys.ENTER)) {
-            game.setScreen(new GameScreen(game));
+            game.setScreen(new HomeScreen(game));
             dispose();
         }
     }

@@ -19,15 +19,15 @@ public class Snake {
      * Constructor for the Snake class.
      * Initializes the body, direction, growth flag, and speed of the snake.
      */
-    public Snake() {
+    public Snake(int x, int y) {
         body = new LinkedList<>();
         direction = Direction.RIGHT;
         grow = false;
         speed = 0.18f; // Velocidade inicial
 
         // Adicionar segmentos iniciais
-        body.add(new Cell(5, 5));
-        body.add(new Cell(4, 5));
+        body.add(new Cell(x, y));
+        body.add(new Cell(x - 1, y));
     }
 
     /**
@@ -61,7 +61,7 @@ public class Snake {
      * Increases the speed of the snake.
      */
     public void increaseSpeed() {
-        speed *= 0.97f; // Aumenta a velocidade
+        this.speed *= 0.97f; // Aumenta a velocidade
     }
 
     /**
@@ -104,5 +104,16 @@ public class Snake {
         }
         return false;
     }
+
+    public boolean collidesWith(Snake other) {
+        Cell head = body.getFirst();
+        for (Cell cell : other.getBody()) {
+            if (head.x == cell.x && head.y == cell.y) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
 
