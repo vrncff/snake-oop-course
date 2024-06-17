@@ -23,14 +23,15 @@ import java.util.Random;
 public class MultiplayerGameScreen implements Screen {
     final SnakeGame game;
     OrthographicCamera camera;
-    Texture snakeTexture, foodTexture, backgroundTexture;
+    Texture snake1Texture, snake2Texture, foodTexture, backgroundTexture;
     Music soundtrack;
     Sound pickUpSound, hitSound;
     Snake snake1, snake2;
     Food food;
     float timer1, timer2;
     Random random;
-    int score;
+    int score1, score2;
+    int bonus1, bonus2;
     BitmapFont font;
     boolean isGameStarted, isGameOver;
 
@@ -46,7 +47,8 @@ public class MultiplayerGameScreen implements Screen {
 
         // Carrega as texturas
         backgroundTexture = game.assets.getTexture("gameScreen.png");
-        snakeTexture = game.assets.getTexture("snake.png");
+        snake1Texture = game.assets.getTexture("snake1.png");
+        snake2Texture = game.assets.getTexture("snake2.png");
         foodTexture = game.assets.getTexture("food.png");
 
         // Carrega os sons
@@ -62,8 +64,10 @@ public class MultiplayerGameScreen implements Screen {
         random = new Random();
         font = new BitmapFont();
 
-        score = 0;                          // Inicializa o score = 0
-        isGameStarted = false;                    // Inicialmente, o jogo não começa
+        score1 = score2 = 0;                          // Inicializa o score = 0
+        bonus1 = bonus2 = 0;                          // Inicializa o bonus = 0
+
+        isGameStarted = false;                        // Inicialmente, o jogo não começa
         isGameOver = false;
         spawnFood();                        // Cria a comida no jogo
 
@@ -87,7 +91,6 @@ public class MultiplayerGameScreen implements Screen {
      */
     @Override
     public void render(float delta) {
-
         camera.update();                                            // Atualiza a câmera
         game.batch.setProjectionMatrix(camera.combined);            // Define a matriz de projeção para a câmera
 
@@ -98,19 +101,20 @@ public class MultiplayerGameScreen implements Screen {
 
         // Desenha a cobra 1
         for (Cell cell : snake1.getBody()) {
-            game.batch.draw(snakeTexture, cell.x * 20, cell.y * 20, 20, 20);
+            game.batch.draw(snake1Texture, cell.x * 20, cell.y * 20, 20, 20);
         }
 
         // Desenha a cobra 2
         for (Cell cell : snake2.getBody()) {
-            game.batch.draw(snakeTexture, cell.x * 20, cell.y * 20, 20, 20);
+            game.batch.draw(snake2Texture, cell.x * 20, cell.y * 20, 20, 20);
         }
 
         // Desenha a comida
         game.batch.draw(food.getTexture(), food.getPosition().x * 20, food.getPosition().y * 20, 20, 20);
 
         // Desenha o score board
-        font.draw(game.batch, "Score: " + score, 10, 470);
+        font.draw(game.batch, "Player 1  - Score: " + score1, 10, 470);
+        font.draw(game.batch, "Player 2  - Score: " + score2, 640, 470);
 
         game.batch.end();       // Finaliza a renderização
 
@@ -153,6 +157,7 @@ public class MultiplayerGameScreen implements Screen {
         }
     }
 
+
     /**
      * Checks for collisions between the snake and the screen borders, the snake itself, and the food.
      * Handles game over condition and plays appropriate sound effects.
@@ -162,24 +167,48 @@ public class MultiplayerGameScreen implements Screen {
         Cell head2 = snake2.getBody().getFirst();
 
         // Checar colisão com as bordas da tela para ambas as cobras
-        if (head1.x < 0 || head1.x >= 40 || head1.y < 0 || head1.y >= 22 || head2.x < 0 || head2.x >= 40 || head2.y < 0 || head2.y >= 22) {
-            game.setScreen(new GameOverScreen(game));
+        if (head1.x < 0 || head1.x >= 40 || head1.y < 0 || head1.y >= 22) {
+            score1 -= 50;                // Penaliza o jogador 1
+            game.setScreen(new GameOverScreen(game, score1, score2,true));
+            hitSound.play();            // Efeito sonoro de colisão
+            soundtrack.stop();          // Para a musica no game over
+            dispose();
+        }
+        if (head2.x < 0 || head2.x >= 40 || head2.y < 0 || head2.y >= 22) {
+            score2 -= 50;                // Penaliza o jogador 2
+            game.setScreen(new GameOverScreen(game, score1, score2,true));
             hitSound.play();            // Efeito sonoro de colisão
             soundtrack.stop();          // Para a musica no game over
             dispose();
         }
 
         // Checar colisão das cobras consigo mesmas
-        if (snake1.checkSelfCollision() || snake2.checkSelfCollision()) {
-            game.setScreen(new GameOverScreen(game));
+        if (snake1.checkSelfCollision()) {
+            score1 -= 50;                // Penaliza o jogador 1
+            game.setScreen(new GameOverScreen(game, score1, score2,true));
+            hitSound.play();            // Efeito sonoro de colisão
+            soundtrack.stop();          // Para a musica no game over
+            dispose();
+        }
+        if (snake2.checkSelfCollision()) {
+            score2 -= 50;                // Penaliza o jogador 2
+            game.setScreen(new GameOverScreen(game, score1, score2,true));
             hitSound.play();            // Efeito sonoro de colisão
             soundtrack.stop();          // Para a musica no game over
             dispose();
         }
 
         // Checar colisão entre as cobras
-        if (snake1.collidesWith(snake2) || snake2.collidesWith(snake1)) {
-            game.setScreen(new GameOverScreen(game));
+        if (snake1.collidesWith(snake2)) {
+            score1 -= 30;                // Penaliza o jogador 1
+            game.setScreen(new GameOverScreen(game, score1, score2,true));
+            hitSound.play();            // Efeito sonoro de colisão
+            soundtrack.stop();          // Para a musica no game over
+            dispose();
+        }
+        if (snake2.collidesWith(snake1)) {
+            score2 -= 30;                // Penaliza o jogador 2
+            game.setScreen(new GameOverScreen(game, score1, score2,true));
             hitSound.play();            // Efeito sonoro de colisão
             soundtrack.stop();          // Para a musica no game over
             dispose();
@@ -187,20 +216,20 @@ public class MultiplayerGameScreen implements Screen {
 
         // Checar colisão com a comida para ambas as cobras
         if (head1.x == food.getPosition().x && head1.y == food.getPosition().y) {
-            System.out.println(snake1.getSpeed());
             snake1.grow();
-            snake1.increaseSpeed();      // Aumentar a velocidade ao comer
-            spawnFood();                // Gera nova comida
-            score += 1;                 // Incrementar a pontuação
-            pickUpSound.play();         // Efeito sonoro de pegar a comida
+            snake1.increaseSpeed();                     // Aumentar a velocidade ao comer
+            spawnFood();                                // Gera nova comida
+            score1 += snake1.getBody().size() + bonus1; // Incrementar a pontuação com base no tamanho e bonificação
+            bonus1 += 10;                               // Incrementar a bonificação
+            pickUpSound.play();                         // Efeito sonoro de pegar a comida
         }
         if (head2.x == food.getPosition().x && head2.y == food.getPosition().y) {
-            System.out.println(snake2.getSpeed());
             snake2.grow();
-            snake2.increaseSpeed();      // Aumentar a velocidade ao comer
-            spawnFood();                // Gera nova comida
-            score += 1;                 // Incrementar a pontuação
-            pickUpSound.play();         // Efeito sonoro de pegar a comida
+            snake2.increaseSpeed();                     // Aumentar a velocidade ao comer
+            spawnFood();                                // Gera nova comida
+            score2 += snake2.getBody().size() + bonus2; // Incrementar a pontuação com base no tamanho e bonificação
+            bonus2 += 10;                               // Incrementar a bonificação
+            pickUpSound.play();                         // Efeito sonoro de pegar a comida
         }
     }
 

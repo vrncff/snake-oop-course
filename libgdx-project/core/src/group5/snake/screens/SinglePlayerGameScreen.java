@@ -28,6 +28,7 @@ public class SinglePlayerGameScreen implements Screen {
     float timer;
     Random random;
     int score;
+    int bonus;
     BitmapFont font;
     boolean started;
     Music soundtrack;
@@ -45,7 +46,7 @@ public class SinglePlayerGameScreen implements Screen {
 
         // Carrega as texturas
         backgroundTexture = game.assets.getTexture("gameScreen.png");
-        snakeTexture = game.assets.getTexture("snake.png");
+        snakeTexture = game.assets.getTexture("snake1.png");
         foodTexture = game.assets.getTexture("food.png");
 
         // Carrega os sons
@@ -59,6 +60,7 @@ public class SinglePlayerGameScreen implements Screen {
         font = new BitmapFont();
 
         score = 0;                          // Inicializa o score = 0
+        bonus = 0;                          // Inicializa o bonus = 0
         started = false;                    // Inicialmente, o jogo não começa
         spawnFood();                        // Cria a comida no jogo
 
@@ -100,7 +102,7 @@ public class SinglePlayerGameScreen implements Screen {
         game.batch.draw(food.getTexture(), food.getPosition().x * 20, food.getPosition().y * 20, 20, 20);
 
         // Desenha o score board
-        font.draw(game.batch, "Score: " + score, 10, 470);
+        font.draw(game.batch, "Score: " + score, 10, 465);
 
         game.batch.end();       // Finaliza a renderização
 
@@ -136,7 +138,7 @@ public class SinglePlayerGameScreen implements Screen {
 
         // Checar colisão com as bordas da tela
         if (head.x < 0 || head.x >= 40 || head.y < 0 || head.y >= 22) {
-            game.setScreen(new GameOverScreen(game));
+            game.setScreen(new GameOverScreen(game, score, 0, false));
             hitSound.play();            // Efeito sonoro de colisão
             soundtrack.stop();          // Para a musica no game over
             dispose();
@@ -144,7 +146,7 @@ public class SinglePlayerGameScreen implements Screen {
 
         // Checar colisão com a própria cobra
         if (snake.checkSelfCollision()) {
-            game.setScreen(new GameOverScreen(game));
+            game.setScreen(new GameOverScreen(game, score, 0, false));
             hitSound.play();            // Efeito sonoro de colisão
             soundtrack.stop();          // Para a musica no game over
             dispose();
@@ -155,7 +157,8 @@ public class SinglePlayerGameScreen implements Screen {
             snake.grow();
             snake.increaseSpeed();      // Aumentar a velocidade ao comer comida
             spawnFood();
-            score += 1;                 // Incrementar a pontuação
+            score += snake.getBody().size() + bonus; // Incrementar a pontuação com base no tamanho e bonificação
+            bonus += 10;
             pickUpSound.play();         // Efeito sonoro de pegar a comida
         }
     }

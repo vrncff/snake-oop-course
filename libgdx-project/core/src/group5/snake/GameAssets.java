@@ -29,7 +29,8 @@ public class GameAssets {
         assetManager.load("selected.wav", Sound.class);
 
         // Assets para o game screen
-        assetManager.load("snake.png", Texture.class);
+        assetManager.load("snake1.png", Texture.class);
+        assetManager.load("snake2.png", Texture.class);
         assetManager.load("food.png", Texture.class);
         assetManager.load("gameScreen.png", Texture.class);
         assetManager.load("soundtrack.mp3", Music.class);
