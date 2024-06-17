@@ -57,6 +57,9 @@ project(":core") {
 
     dependencies {
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
+
+        // Add JUnit dependency for testing
+        testImplementation 'junit:junit:4.13.2'
         
     }
 }

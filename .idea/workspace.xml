@@ -4,18 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5c5403e8-61b1-4fe9-8134-ac68a47efdd2" name="Changes" comment="">
+    <list default="true" id="a3f15d69-2dd7-4a9b-ba80-705305a5c6aa" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assignment.md" beforeDir="false" afterPath="$PROJECT_DIR$/Assignment.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/libgdx-project/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/libgdx-project/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libgdx-project/assets/homeScreen.png" beforeDir="false" afterPath="$PROJECT_DIR$/libgdx-project/assets/homeScreen.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libgdx-project/assets/multiPlayerText.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/libgdx-project/assets/pressEnterText.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/libgdx-project/assets/quitText.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/libgdx-project/assets/singlePlayerText.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/libgdx-project/assets/snakeIcon.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/libgdx-project/assets/title.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/libgdx-project/assets/bgHomeScreen.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/libgdx-project/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/libgdx-project/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/libgdx-project/core/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/libgdx-project/core/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/libgdx-project/core/src/group5/snake/GameAssets.java" beforeDir="false" afterPath="$PROJECT_DIR$/libgdx-project/core/src/group5/snake/GameAssets.java" afterDir="false" />
@@ -26,9 +26,8 @@
       <change beforePath="$PROJECT_DIR$/libgdx-project/core/src/group5/snake/entity/Snake.java" beforeDir="false" afterPath="$PROJECT_DIR$/libgdx-project/core/src/group5/snake/entity/Snake.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/libgdx-project/core/src/group5/snake/screens/GameOverScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/libgdx-project/core/src/group5/snake/screens/GameOverScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/libgdx-project/core/src/group5/snake/screens/HomeScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/libgdx-project/core/src/group5/snake/screens/HomeScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libgdx-project/core/src/group5/snake/screens/MultiPlayerGameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/libgdx-project/core/src/group5/snake/screens/MultiPlayerGameScreen.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/libgdx-project/core/src/group5/snake/screens/MultiplayerGameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/libgdx-project/core/src/group5/snake/screens/MultiplayerGameScreen.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/libgdx-project/core/src/group5/snake/screens/SinglePlayerGameScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/libgdx-project/core/src/group5/snake/screens/SinglePlayerGameScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/libgdx-project/core/test/group5/snake/entity/SnakeTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/libgdx-project/core/test/group5/snake/entity/SnakeTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/libgdx-project/desktop/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/libgdx-project/desktop/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/libgdx-project/desktop/src/group5/snake/DesktopLauncher.java" beforeDir="false" afterPath="$PROJECT_DIR$/libgdx-project/desktop/src/group5/snake/DesktopLauncher.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/libgdx-project/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/libgdx-project/gradle.properties" afterDir="false" />
@@ -48,9 +47,6 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
-        <task path="$PROJECT_DIR$/libgdx-project/core">
-          <activation />
-        </task>
         <projects_view>
           <tree_state>
             <expand />
@@ -60,44 +56,33 @@
       </state>
     </system>
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 2
-}</component>
-  <component name="ProjectId" id="2hHQODcgh4eP76ZvfVF1zVCdyMz" />
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="2" id="Add" />
-  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 2
+}]]></component>
+  <component name="ProjectId" id="2hzMpw7m6hTMZvKvMZqxn74v7IF" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Gradle.SnakeGame:desktop [:desktop:DesktopLauncher.main()].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "testing",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true"
   }
 }]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="5c5403e8-61b1-4fe9-8134-ac68a47efdd2" name="Changes" comment="" />
-      <created>1717248493128</created>
+      <changelist id="a3f15d69-2dd7-4a9b-ba80-705305a5c6aa" name="Changes" comment="" />
+      <created>1718592640501</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1717248493128</updated>
+      <updated>1718592640501</updated>
     </task>
     <servers />
   </component>
