@@ -38,7 +38,7 @@ public class GameOverScreen implements Screen {
         this.score2 = score2;
         this.isMultiplayer = isMultiplayer;
 
-        // Determine the winner
+        // Determina o ganhador
         if (isMultiplayer) {
             if (score1 > score2) {
                 winner = "Player 1 Wins!";
@@ -48,9 +48,6 @@ public class GameOverScreen implements Screen {
                 winner = "It's a Tie!";
             }
         }
-
-        System.out.println("Score 1: " + score1 + " Score 2: " + score2);
-
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
         backgroundTexture = game.assets.getTexture("gameOverScreen.png");
@@ -84,24 +81,43 @@ public class GameOverScreen implements Screen {
             game.setScreen(new HomeScreen(game));
             dispose();
         }
-
     }
 
-    @Override
-    public void resize(int width, int height) {}
-
+    /**
+     * Called when this screen becomes the current screen of the game.
+     */
     @Override
     public void show() {}
 
+    /**
+     * Called when the screen is resized.
+     * @param width  the new width of the screen
+     * @param height the new height of the screen
+     */
+    @Override
+    public void resize(int width, int height) {}
+
+    /**
+     * Called when the game is paused.
+     */
     @Override
     public void pause() {}
 
+    /**
+     * Called when the game is resumed after being paused.
+     */
     @Override
     public void resume() {}
 
+    /**
+     * Called when another screen replaces this one.
+     */
     @Override
     public void hide() {}
 
+    /**
+     * Releases the resources
+     */
     @Override
     public void dispose() {
         font.dispose();

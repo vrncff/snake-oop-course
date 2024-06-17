@@ -106,22 +106,41 @@ public class HomeScreen implements Screen {
         dispose();
     }
 
-    // Implementação dos métodos não utilizados
+    /**
+     * Called when this screen becomes the current screen of the game.
+     */
     @Override
-    public void resize(int width, int height) {}
+    public void show() { }
 
+    /**
+     * Called when the screen is resized.
+     * @param width  the new width of the screen
+     * @param height the new height of the screen
+     */
     @Override
-    public void show() {}
+    public void resize(int width, int height) { }
 
+    /**
+     * Called when the game is paused.
+     */
     @Override
-    public void pause() {}
+    public void pause() { }
 
+    /**
+     * Called when the game is resumed after being paused.
+     */
     @Override
-    public void resume() {}
+    public void resume() { }
 
+    /**
+     * Called when another screen replaces this one.
+     */
     @Override
-    public void hide() {}
+    public void hide() { }
 
+    /**
+     * Releases the resources
+     */
     @Override
     public void dispose() {
         font.dispose(); // Libera recursos da fonte quando a tela é descartada

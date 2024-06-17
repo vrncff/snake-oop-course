@@ -104,7 +104,6 @@ public class MultiplayerGameScreen implements Screen {
         } while (!validPosition);
     }
 
-
     /**
      * Renders the game objects and handles game logic.
      * @param delta time since last frame
@@ -150,18 +149,15 @@ public class MultiplayerGameScreen implements Screen {
             // Atualiza o estado do jogo
             timer1 += delta;
             timer2 += delta;
-
             if (timer1 >= snake1.getSpeed()) {
                 snake1.update();
-                checkCollisions();
                 timer1 = 0;
             }
-
             if(timer2 >= snake2.getSpeed()) {
                 snake2.update();
-                checkCollisions();
                 timer2 = 0;
             }
+            checkCollisions();
 
             // Controle da cobra 1
             if (Gdx.input.isKeyPressed(Keys.W)) snake1.changeDirection(Direction.UP);
@@ -184,7 +180,6 @@ public class MultiplayerGameScreen implements Screen {
     private void checkCollisions() {
         Cell head1 = snake1.getBody().getFirst();
         Cell head2 = snake2.getBody().getFirst();
-
         boolean gameOver = false;
 
         // Checar colisão com as bordas da tela para ambas as cobras
@@ -210,6 +205,9 @@ public class MultiplayerGameScreen implements Screen {
         // Checar colisão entre as cobras
         if (snake1.collidesWith(snake2)) {
             score1 -= 30;                // Penaliza o jogador 1
+            gameOver = true;
+        }
+        if (snake2.collidesWith(snake1)) {
             score2 -= 30;                // Penaliza o jogador 2
             gameOver = true;
         }
@@ -240,7 +238,6 @@ public class MultiplayerGameScreen implements Screen {
             pickUpSound.play();                         // Efeito sonoro de pegar a comida
         }
     }
-
 
     /**
      * Called when this screen becomes the current screen of the game.
@@ -281,7 +278,6 @@ public class MultiplayerGameScreen implements Screen {
     public void dispose() {
         // Dispose do BitmapFont
         font.dispose();
-
         // Para a música de fundo se ainda estiver tocando
         if (soundtrack.isPlaying()) {
             soundtrack.stop();

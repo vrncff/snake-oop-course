@@ -8,7 +8,6 @@ import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
  * It sets up the configuration for the game window and launches the game.
  */
 public class DesktopLauncher {
-
 	/**
 	 * The main method that is called when the application is started.
 	 * @param arg command line arguments

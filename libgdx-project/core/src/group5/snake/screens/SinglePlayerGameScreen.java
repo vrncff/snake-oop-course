@@ -90,14 +90,12 @@ public class SinglePlayerGameScreen implements Screen {
         } while (!validPosition);
     }
 
-
     /**
      * Renders the game objects and handles game logic.
      * @param delta time since last frame
      */
     @Override
     public void render(float delta) {
-
         camera.update();                                            // Atualiza a câmera
         game.batch.setProjectionMatrix(camera.combined);            // Define a matriz de projeção para a câmera
 
@@ -212,7 +210,7 @@ public class SinglePlayerGameScreen implements Screen {
      */
     @Override
     public void dispose() {
-        // Dispose do BitmapFont
+        // Libera a fonte
         font.dispose();
 
         // Para a música de fundo se ainda estiver tocando

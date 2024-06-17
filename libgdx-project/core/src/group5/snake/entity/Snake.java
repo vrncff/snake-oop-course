@@ -18,6 +18,8 @@ public class Snake {
     /**
      * Constructor for the Snake class.
      * Initializes the body, direction, growth flag, and speed of the snake.
+     * @param x the initial x-coordinate for the snake's head
+     * @param y the initial y-coordinate for the snake's head
      */
     public Snake(int x, int y) {
         body = new LinkedList<>();
@@ -105,6 +107,11 @@ public class Snake {
         return false;
     }
 
+    /**
+     * Checks if the snake collides with another snake.
+     * @param other the other snake to check collision with
+     * @return true if there is a collision, false otherwise
+     */
     public boolean collidesWith(Snake other) {
         Cell head = body.getFirst();
         for (Cell cell : other.getBody()) {
