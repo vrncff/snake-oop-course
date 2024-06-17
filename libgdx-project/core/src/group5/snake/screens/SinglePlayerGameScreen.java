@@ -67,17 +67,29 @@ public class SinglePlayerGameScreen implements Screen {
         // Configura e inicia a música de fundo
         soundtrack.setLooping(true);
         soundtrack.play();
-
     }
 
     /**
      * Spawns food at a random location within the game area.
      */
     private void spawnFood() {
-        int x = random.nextInt(40);     // 800/20 = 40 células por grade
-        int y = random.nextInt(22);     // 480/20 = 24 (-2 desconsiderando a faixa de score)
-        food = new Food(foodTexture, x, y);
+        boolean validPosition;
+        do {
+            validPosition = true;
+            int x = random.nextInt(40);     // 800/20 = 40 células por grade
+            int y = random.nextInt(22);     // 480/20 = 24 (-2 desconsiderando a faixa de score)
+            food = new Food(foodTexture, x, y);
+
+            // Verifica se a posição gerada coincide com qualquer parte da cobra
+            for (Cell cell : snake.getBody()) {
+                if (cell.x == x && cell.y == y) {
+                    validPosition = false;
+                    break;
+                }
+            }
+        } while (!validPosition);
     }
+
 
     /**
      * Renders the game objects and handles game logic.

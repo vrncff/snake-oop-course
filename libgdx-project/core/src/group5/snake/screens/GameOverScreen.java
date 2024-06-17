@@ -49,6 +49,8 @@ public class GameOverScreen implements Screen {
             }
         }
 
+        System.out.println("Score 1: " + score1 + " Score 2: " + score2);
+
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
         backgroundTexture = game.assets.getTexture("gameOverScreen.png");
@@ -64,7 +66,6 @@ public class GameOverScreen implements Screen {
     public void render(float delta) {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
-
         game.batch.begin();
         game.batch.draw(backgroundTexture, 0, 0, 800, 480);
         font.setColor(Color.BLACK);
@@ -83,6 +84,7 @@ public class GameOverScreen implements Screen {
             game.setScreen(new HomeScreen(game));
             dispose();
         }
+
     }
 
     @Override
