@@ -208,8 +208,7 @@ public class MultiplayerGameScreen implements Screen {
         if (snake1.collidesWith(snake2)) {
             score1 -= 30;                // Penaliza o jogador 1
             gameOver = true;
-        }
-        if (snake2.collidesWith(snake1)) {
+        }else if (snake2.collidesWith(snake1)) {
             score2 -= 30;                // Penaliza o jogador 2
             gameOver = true;
         }
@@ -240,6 +239,7 @@ public class MultiplayerGameScreen implements Screen {
             pickUpSound.play();                         // Efeito sonoro de pegar a comida
         }
     }
+
 
     /**
      * Called when this screen becomes the current screen of the game.
