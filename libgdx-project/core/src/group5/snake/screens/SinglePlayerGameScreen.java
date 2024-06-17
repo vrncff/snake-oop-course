@@ -20,6 +20,10 @@ import java.util.Random;
  * It handles the rendering of game objects, and user input.
  */
 public class SinglePlayerGameScreen implements Screen {
+    private static final int CELL_SIZE = 20;    // Tamanho de cada célula em pixels
+    private static final int GRID_WIDTH = 40;   // Número de células na largura (800 / 20)
+    private static final int GRID_HEIGHT = 24;  // Número de células na altura (480 / 20)
+
     final SnakeGame game;
     OrthographicCamera camera;
     Texture snakeTexture, foodTexture, backgroundTexture;
@@ -42,7 +46,7 @@ public class SinglePlayerGameScreen implements Screen {
     public SinglePlayerGameScreen(final SnakeGame game) {
         this.game = game;
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);     // Define a resolução da tela
+        camera.setToOrtho(false, GRID_WIDTH * CELL_SIZE, GRID_HEIGHT * CELL_SIZE);     // Define a resolução da tela
 
         // Carrega as texturas
         backgroundTexture = game.assets.getTexture("gameScreen.png");
@@ -76,8 +80,8 @@ public class SinglePlayerGameScreen implements Screen {
         boolean validPosition;
         do {
             validPosition = true;
-            int x = random.nextInt(40);     // 800/20 = 40 células por grade
-            int y = random.nextInt(22);     // 480/20 = 24 (-2 desconsiderando a faixa de score)
+            int x = random.nextInt(GRID_WIDTH);                 // 800/20 = 40 células por grade
+            int y = random.nextInt(GRID_HEIGHT - 2);     // 480/20 = 24 (-2 desconsiderando a faixa de score)
             food = new Food(foodTexture, x, y);
 
             // Verifica se a posição gerada coincide com qualquer parte da cobra
@@ -102,14 +106,14 @@ public class SinglePlayerGameScreen implements Screen {
         game.batch.begin();     // Inicia a renderização
 
         // Desenha o fundo
-        game.batch.draw(backgroundTexture, 0, 0, 800, 480);
+        game.batch.draw(backgroundTexture, 0, 0, GRID_WIDTH * CELL_SIZE, GRID_HEIGHT * CELL_SIZE);
 
         // Desenha a cobra
         for (Cell cell : snake.getBody())
-            game.batch.draw(snakeTexture, cell.x * 20, cell.y * 20, 20, 20);
+            game.batch.draw(snakeTexture, cell.x * CELL_SIZE, cell.y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
 
         // Desenha a comida
-        game.batch.draw(food.getTexture(), food.getPosition().x * 20, food.getPosition().y * 20, 20, 20);
+        game.batch.draw(food.getTexture(), food.getPosition().x * CELL_SIZE, food.getPosition().y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
 
         // Desenha o score board
         font.draw(game.batch, "Score: " + score, 10, 465);
@@ -147,7 +151,7 @@ public class SinglePlayerGameScreen implements Screen {
         Cell head = snake.getBody().getFirst();
 
         // Checar colisão com as bordas da tela
-        if (head.x < 0 || head.x >= 40 || head.y < 0 || head.y >= 22) {
+        if (head.x < 0 || head.x >= GRID_WIDTH || head.y < 0 || head.y >= GRID_HEIGHT - 2) {
             game.setScreen(new GameOverScreen(game, score, 0, false));
             hitSound.play();            // Efeito sonoro de colisão
             soundtrack.stop();          // Para a musica no game over

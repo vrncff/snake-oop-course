@@ -21,6 +21,10 @@ import java.util.Random;
  * It handles the rendering of game objects, and user input.
  */
 public class MultiplayerGameScreen implements Screen {
+    private static final int CELL_SIZE = 20;    // Tamanho de cada célula em pixels
+    private static final int GRID_WIDTH = 40;   // Número de células na largura (800 / 20)
+    private static final int GRID_HEIGHT = 24;  // Número de células na altura (480 / 20)
+
     final SnakeGame game;
     OrthographicCamera camera;
     Texture snake1Texture, snake2Texture, foodTexture, backgroundTexture;
@@ -43,7 +47,7 @@ public class MultiplayerGameScreen implements Screen {
     public MultiplayerGameScreen(final SnakeGame game) {
         this.game = game;
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);     // Define a resolução da tela
+        camera.setToOrtho(false, GRID_WIDTH * CELL_SIZE, GRID_HEIGHT * CELL_SIZE);     // Define a resolução da tela
 
         // Carrega as texturas
         backgroundTexture = game.assets.getTexture("gameScreen.png");
@@ -68,7 +72,7 @@ public class MultiplayerGameScreen implements Screen {
 
         isGameStarted = false;                        // Inicialmente, o jogo não começa
         isGameOver = false;
-        spawnFood();                        // Cria a comida no jogo
+        spawnFood();                                    // Cria a comida no jogo
 
         // Configura e inicia a música de fundo
         soundtrack.setLooping(true);
@@ -82,19 +86,17 @@ public class MultiplayerGameScreen implements Screen {
         boolean validPosition;
         do {
             validPosition = true;
-            int x = random.nextInt(40);     // 800/20 = 40 células por grade
-            int y = random.nextInt(22);     // 480/20 = 24 (-2 desconsiderando a faixa de score)
+            int x = random.nextInt(GRID_WIDTH);                 // 800/20 = 40 células por grade
+            int y = random.nextInt(GRID_HEIGHT - 2);     // 480/20 = 24 (-2 desconsiderando a faixa de score)
             food = new Food(foodTexture, x, y);
 
-            // Verifica se a posição gerada coincide com qualquer parte da cobra 1
+            // Verifica se a posição gerada coincide com qualquer parte da cobra
             for (Cell cell : snake1.getBody()) {
                 if (cell.x == x && cell.y == y) {
                     validPosition = false;
                     break;
                 }
             }
-
-            // Verifica se a posição gerada coincide com qualquer parte da cobra 2
             for (Cell cell : snake2.getBody()) {
                 if (cell.x == x && cell.y == y) {
                     validPosition = false;
@@ -116,20 +118,20 @@ public class MultiplayerGameScreen implements Screen {
         game.batch.begin();     // Inicia a renderização
 
         // Desenha o fundo
-        game.batch.draw(backgroundTexture, 0, 0, 800, 480);
+        game.batch.draw(backgroundTexture, 0, 0, GRID_WIDTH * CELL_SIZE, GRID_HEIGHT * CELL_SIZE);
 
         // Desenha a cobra 1
         for (Cell cell : snake1.getBody()) {
-            game.batch.draw(snake1Texture, cell.x * 20, cell.y * 20, 20, 20);
+            game.batch.draw(snake1Texture, cell.x * CELL_SIZE, cell.y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
         }
 
         // Desenha a cobra 2
         for (Cell cell : snake2.getBody()) {
-            game.batch.draw(snake2Texture, cell.x * 20, cell.y * 20, 20, 20);
+            game.batch.draw(snake2Texture, cell.x * CELL_SIZE, cell.y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
         }
 
         // Desenha a comida
-        game.batch.draw(food.getTexture(), food.getPosition().x * 20, food.getPosition().y * 20, 20, 20);
+        game.batch.draw(food.getTexture(), food.getPosition().x * CELL_SIZE, food.getPosition().y * CELL_SIZE, CELL_SIZE, CELL_SIZE);
 
         // Desenha o score board
         font.draw(game.batch, "Player 1  - Score: " + score1, 10, 470);
@@ -183,11 +185,11 @@ public class MultiplayerGameScreen implements Screen {
         boolean gameOver = false;
 
         // Checar colisão com as bordas da tela para ambas as cobras
-        if (head1.x < 0 || head1.x >= 40 || head1.y < 0 || head1.y >= 22) {
+        if (head1.x < 0 || head1.x >= GRID_WIDTH || head1.y < 0 || head1.y >= GRID_HEIGHT - 2) {
             score1 -= 50;                // Penaliza o jogador 1
             gameOver = true;
         }
-        if (head2.x < 0 || head2.x >= 40 || head2.y < 0 || head2.y >= 22) {
+        if (head2.x < 0 || head2.x >= GRID_WIDTH || head2.y < 0 || head2.y >= GRID_HEIGHT - 2) {
             score2 -= 50;                // Penaliza o jogador 2
             gameOver = true;
         }
