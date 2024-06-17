@@ -24,13 +24,9 @@ public class GameAssets {
      */
     public void load() {
         // Assets para o home screen
-        assetManager.load("bgHomeScreen.png", Texture.class);
-        assetManager.load("title.png", Texture.class);
-        assetManager.load("snakeIcon.png", Texture.class);
-        assetManager.load("singlePlayerText.png", Texture.class);
-        assetManager.load("multiPlayerText.png", Texture.class);
-        assetManager.load("quitText.png", Texture.class);
-        assetManager.load("pressEnterText.png", Texture.class);
+        assetManager.load("homeScreen.png", Texture.class);
+        assetManager.load("selecting.wav", Sound.class);
+        assetManager.load("selected.wav", Sound.class);
 
         // Assets para o game screen
         assetManager.load("snake.png", Texture.class);

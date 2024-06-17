@@ -20,7 +20,7 @@ import java.util.Random;
  * This class represents the main game screen for the Snake game.
  * It handles the rendering of game objects, and user input.
  */
-public class MultiPlayerGameScreen implements Screen {
+public class MultiplayerGameScreen implements Screen {
     final SnakeGame game;
     OrthographicCamera camera;
     Texture snakeTexture, foodTexture, backgroundTexture;
@@ -35,11 +35,11 @@ public class MultiPlayerGameScreen implements Screen {
     boolean isGameStarted, isGameOver;
 
     /**
-     * Constructor for the MultiPlayerGameScreen class.
+     * Constructor for the MultiplayerGameScreen class.
      * Initializes the game, camera, textures, sounds, game objects, score, and background music.
      * @param game the current game instance
      */
-    public MultiPlayerGameScreen(final SnakeGame game) {
+    public MultiplayerGameScreen(final SnakeGame game) {
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);     // Define a resolução da tela

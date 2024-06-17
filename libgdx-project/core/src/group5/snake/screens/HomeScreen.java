@@ -1,6 +1,7 @@
 package group5.snake.screens;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,10 +17,12 @@ import group5.snake.SnakeGame;
 public class HomeScreen implements Screen {
     final SnakeGame game;
     OrthographicCamera camera;
-    Texture bgHomeScreen, title;
+    Texture backgroundTexture;
+    Sound selecting, selected;
     BitmapFont font;
-    float pulseTimer = 0f;
-    float pulseDuration = 1f; // Tempo para uma pulsação completa
+
+    private int selectedOption = 0; // 0 - Single Player, 1 - Multiplayer, 2 - Quit
+    private final String[] options = {"Single Player", "Multiplayer", "Quit"};
 
     /**
      * Constructor for the HomeScreen class.
@@ -32,8 +35,13 @@ public class HomeScreen implements Screen {
         // Cria e configura a resolução da tela
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 800, 480);
-        bgHomeScreen = game.assets.getTexture("bgHomeScreen.png");            // Carrega a textura de fundo
-        title = game.assets.getTexture("title.png");            // Carrega a textura de fundo
+
+        // Carrega a textura de fundo
+        backgroundTexture = game.assets.getTexture("homeScreen.png");
+
+        // Carrega os sons
+        selecting = game.assets.getSound("selecting.wav");
+        selected = game.assets.getSound("selected.wav");
 
         // Carrega a fonte para renderizar o texto
         font = new BitmapFont();
@@ -45,29 +53,57 @@ public class HomeScreen implements Screen {
      */
     @Override
     public void render(float delta) {
-        pulseTimer += Gdx.graphics.getDeltaTime();
-        float pulseProgress = pulseTimer / pulseDuration;
-        float scaleFactor = 1 + 0.07f * (1 - (float)Math.cos(Math.PI * 2 * pulseProgress)); // Fator de escala para a pulsação
+        camera.update(); // Atualiza a câmera
+        game.batch.setProjectionMatrix(camera.combined); // Define a matriz de projeção da câmera
 
-        camera.update();                                        // Atualiza a câmera
-        game.batch.setProjectionMatrix(camera.combined);        // Define a matriz de projeção da câmera
+        game.batch.begin(); // Inicia a renderização
+        game.batch.draw(backgroundTexture,0,0,800,480);     // Desenha o fundo
 
-        game.batch.begin();                                                     // Inicia a renderização
-        game.batch.draw(bgHomeScreen,0,0);          // Desenha o fundo
-        game.batch.draw(title,0,0);
-        game.batch.end();                                                       // Termina a renderização
-
-        // Lógica para controlar a animação de pulsação
-        if (pulseTimer > pulseDuration) {
-            pulseTimer -= pulseDuration;
+        // Renderiza as opções do menu
+        for (int i = 0; i < options.length; i++) {
+            if (i == selectedOption) {
+                font.setColor(Color.RED);
+            } else {
+                font.setColor(Color.WHITE);
+            }
+            font.draw(game.batch, options[i], 550, 300 - i * 40);
         }
 
-        // Verifica se a tecla foi pressionada
-        if (Gdx.input.isKeyPressed(Keys.ENTER)) {
-            // Aqui você pode iniciar o jogo ou alternar para outra tela, por exemplo:
-            // game.setScreen(new GameScreen(game)); // Supondo que GameScreen seja a tela do jogo
-            // dispose(); // Se necessário
+        game.batch.end(); // Termina a renderização
+
+        // Verifica entrada do usuário para navegação no menu
+        if (Gdx.input.isKeyJustPressed(Keys.W) || Gdx.input.isKeyJustPressed(Keys.UP)) {
+            selectedOption = (selectedOption - 1 + options.length) % options.length;
+            selecting.play();
         }
+        if (Gdx.input.isKeyJustPressed(Keys.S) || Gdx.input.isKeyJustPressed(Keys.DOWN)) {
+            selectedOption = (selectedOption + 1) % options.length;
+            selecting.play();
+        }
+
+        // Verifica entrada do usuário para seleção de opção
+        if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
+            selectOption();
+            selected.play();
+        }
+    }
+
+    /**
+     * Handles the selection of a menu option.
+     */
+    private void selectOption() {
+        switch (selectedOption) {
+            case 0:
+                game.setScreen(new SinglePlayerGameScreen(game));
+                break;
+            case 1:
+                game.setScreen(new MultiplayerGameScreen(game));
+                break;
+            case 2:
+                Gdx.app.exit();
+                break;
+        }
+        dispose();
     }
 
     // Implementação dos métodos não utilizados
